@@ -102,3 +102,11 @@ git tag -a v0.3 -m "Final"
 
 Puede ajustar su cliente para que, además de eventos de mouse, [detecte eventos de pantallas táctiles](http://www.homeandlearn.co.uk/JS/html5_canvas_touch_events.html), de manera que los clientes móviles también puedan interactuar con la aplicación!.
 
+
+### Criterios de evaluación
+
+1. La aplicación propaga correctamente los puntos entre todas las instancias abierta de la misma.
+2. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos.
+3. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
+4.a. [Puntos opcionales] La aplicación permite controlar la conexión/desconexión al broker de mensajes.
+4.b. [Puntos opcionales] La aplicación acepta eventos táctiles.
