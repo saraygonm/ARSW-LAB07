@@ -108,5 +108,5 @@ Puede ajustar su cliente para que, además de eventos de mouse, [detecte eventos
 1. La aplicación propaga correctamente los puntos entre todas las instancias abierta de la misma.
 2. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos.
 3. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
-4.a. [Puntos opcionales] La aplicación permite controlar la conexión/desconexión al broker de mensajes.
-4.b. [Puntos opcionales] La aplicación acepta eventos táctiles.
+4. [Puntos opcionales] La aplicación permite controlar la conexión/desconexión al broker de mensajes.
+5. [Puntos opcionales] La aplicación acepta eventos táctiles.
