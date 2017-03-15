@@ -88,6 +88,7 @@ Para esto, se va a hacer una configuración alterna en la que, en lugar de que s
 	3. El cliente, ahora también se suscribirá al tópico '/topic/newpolygon'. El 'callback' asociado a la recepción de eventos en el mismo debe, con los datos recibidos, dibujar un polígono, [tal como se muestran en ese ejemplo](http://www.arungudelli.com/html5/html5-canvas-polygon/).
 	4. Verifique la funcionalidad: igual a la anterior, pero ahora dibujando polígonos cada vez que se agreguen cuatro puntos.
 	
+	
 
 ## Parte IV.
 
@@ -111,6 +112,14 @@ La aplicación antes planteada tiene un grave defecto: sólo se puede hacer un d
 4. En cualquier momento, al realizar la consulta al recurso /dibujos/{iddibujo}/colaboradores, se debe poder identificar quienes están (o han estado) colaborando en un dibujo. OPCIONALMENTE, puede agregar un nuevo tópico dedicado al evento de 'nuevos colaboradores del dibujo {iddibujo}', suscribir a los clientes el mismo (para que actualicen un listado de colaboradores), y hacer que el API rest, cada vez que reciba una petición PUT para agregar un nuevo colaborador, notifique de esto a los interesados.
 
 5. A partir de los diagramas dados en el archivo ASTAH incluido, haga un nuevo diagrama de actividades correspondiente a lo realizado hasta este punto. Exporte este diagrama en formato PNG, e inclúyalo en su entrega con el nombre "DIAGRAMA_ACTUALIZADO.png"
+
+
+5. Haga commit de lo realizado, y agregue un TAG para demarcar el avance de la parte final:
+
+	```bash
+git commit -m "PARTE FINAL".
+	```	
+
 
 ## Opcional
 
