@@ -35,8 +35,8 @@ Para esto, realice lo siguiente:
 5. Agregue los cambios al repositorio y haga un último commit de lo realizado usando el comentario "PARTE 1".
 
 	```bash
-git commit -m "PARTE 1".
-	```
+	git commit -m "PARTE 1".
+```
 
 ## Parte II.
 
@@ -50,8 +50,8 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 5. Haga commit de lo realizado, y agregue un TAG para demarcar el avance de la parte 2:
 
 	```bash
-git commit -m "PARTE 2".
-	```
+	git commit -m "PARTE 2".
+```
 
 ## Parte III.
 
@@ -117,8 +117,8 @@ La aplicación antes planteada tiene un grave defecto: sólo se puede hacer un d
 5. Haga commit de lo realizado, y agregue un TAG para demarcar el avance de la parte final:
 
 	```bash
-git commit -m "PARTE FINAL".
-	```	
+	git commit -m "PARTE FINAL".
+```	
 
 
 ## Opcional
