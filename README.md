@@ -29,14 +29,14 @@ Para esto, realice lo siguiente:
 
 	```javascript
 	var theObject=JSON.parse(message.body);
-```
+	```
 3. Compile y ejecute su aplicación. Abra la aplicación en varias pestañas diferentes (para evitar problemas con el caché del navegador, use el modo 'incógnito' en cada prueba).
 4. Ingrese los datos, ejecute la acción del botón, y verifique que en todas la pestañas se haya lanzado la alerta con los datos ingresados.
 5. Agregue los cambios al repositorio y haga un último commit de lo realizado usando el comentario "PARTE 1".
 
 	```bash
 	git commit -m "PARTE 1".
-```
+	```
 
 ## Parte II.
 
@@ -51,7 +51,7 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 
 	```bash
 	git commit -m "PARTE 2".
-```
+	```
 
 ## Parte III.
 
@@ -118,7 +118,7 @@ La aplicación antes planteada tiene un grave defecto: sólo se puede hacer un d
 
 	```bash
 	git commit -m "PARTE FINAL".
-```	
+	```	
 
 
 ## Opcional
