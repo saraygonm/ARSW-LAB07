@@ -13,8 +13,13 @@ En este caso, el manejador de mensajes asociado a "/app" aún no está configura
 
 ## Parte I.
 
+Para las partes I y II, usted va a implementar una herramienta de dibujo colaborativo Web, basada en el siguiente diagrama de actividades:
 
-1. Haga que la aplicación HTML5/JS permita ingresar, a través de dos campos, un valor de X y Y. Agregue un botón con una acción (definida en el módulo de JavaScript) que convierta los datos ingresados en un objeto JavaScript que tenga las propiedades X y Y, y los publique en el tópico: /topic/newpoint . Para esto tenga en cuenta (1) usar el cliente STOMP creado en el módulo de JavaScript, (2) enviar la representación textual del objeto JSON (usar JSON.stringify). Por ejemplo:
+![](img/P1-AD.png)
+
+Para esto, realice lo siguiente:
+
+1. Haga que la aplicación HTML5/JS permita ingresar, a través de dos campos, un valor de X y Y. Agregue un botón con una acción (definida en el módulo de JavaScript) que convierta los datos ingresados en un objeto JavaScript que tenga las propiedades X y Y, y los publique en el tópico: /topic/newpoint . Para esto tenga en cuenta (1) usar el cliente STOMP creado en el módulo de JavaScript y (2) enviar la representación textual del objeto JSON (usar JSON.stringify). Por ejemplo:
 
 	```javascript
 	stompClient.send("/topic/newpoint", {}, JSON.stringify({x:10,y:10}));
@@ -27,10 +32,10 @@ En este caso, el manejador de mensajes asociado a "/app" aún no está configura
 ```
 3. Compile y ejecute su aplicación. Abra la aplicación en varias pestañas diferentes (para evitar problemas con el caché del navegador, use el modo 'incógnito' en cada prueba).
 4. Ingrese los datos, ejecute la acción del botón, y verifique que en todas la pestañas se haya lanzado la alerta con los datos ingresados.
-5. Haga commit de lo realizado, y agregue un TAG para demarcar el avance de la parte 1:
+5. Agregue los cambios al repositorio y haga un último commit de lo realizado usando el comentario "PARTE 1".
 
 	```bash
-git tag -a v0.1 -m "Parte1"
+git commit -m "PARTE 1".
 	```
 
 ## Parte II.
@@ -45,12 +50,16 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 5. Haga commit de lo realizado, y agregue un TAG para demarcar el avance de la parte 2:
 
 	```bash
-git tag -a v0.2 -m "Parte2"
+git commit -m "PARTE 2".
 	```
 
 ## Parte III.
 
-En la configuración anterior, la aplicación de SpringBoot cumple el papel de 'Broker' pasivo, lo que significa que no tiene manera de controlar los mensajes recibidos y propagados. Se va a hacer una configuración alterna en la que, en lugar de que se propaguen automáticamente los mensajes, éstos será recibidos y procesados por el servidor, de manera que se pueda decidir qué hacer con los mismos. 
+Para la parte III, usted va  a implementar una versión extendida del modelo de actividades y eventos anterior, en la que el servidor (que hasta ahora sólo fungía como Broker o MOM -Message Oriented Middleware-) entrará a coordinar parte de los eventos recibidos, para a partir de los mismos agregar la funcionalidad de 'dibujo colaborativo de polígonos':
+
+![](img/P2-AD.png)
+
+Para esto, se va a hacer una configuración alterna en la que, en lugar de que se propaguen los mensajes 'newpoint' entre todos los clientes, éstos sean recibidos y procesados primero por el servidor, de manera que se pueda decidir qué hacer con los mismos. 
 
 1. Cree una nueva clase que haga el papel de 'Controlador' para ciertos mensajes STOMP (en este caso, aquellos enviados a través de "/app/newpoint"). A este controlador se le inyectará un SimpMessagingTemplate, un Bean de Spring que permitirá publicar eventos en un determinado tópico. Por ahora, se definirá que cuando se intercepten los eventos enviados a "/app/newpoint" (que se supone deben incluir un punto), se mostrará por pantalla el punto recibido, y luego se procederá a reenviar el evento al tópico al cual están suscritos los clientes "/topic/newpoint".
 
@@ -79,34 +88,43 @@ En la configuración anterior, la aplicación de SpringBoot cumple el papel de '
 	3. El cliente, ahora también se suscribirá al tópico '/topic/newpolygon'. El 'callback' asociado a la recepción de eventos en el mismo debe, con los datos recibidos, dibujar un polígono, [tal como se muestran en ese ejemplo](http://www.arungudelli.com/html5/html5-canvas-polygon/).
 	4. Verifique la funcionalidad: igual a la anterior, pero ahora dibujando polígonos cada vez que se agreguen cuatro puntos.
 	
-	
 
 ## Parte IV.
 
-Normalmente, las aplicaciones integran Brokers de eventos y APIs REST. Suponga que se quiere permitir colaborar con los dibujos desde otro tipo de dispositivos que no soportan WebSockets. Para esto, haga un API REST con un recurso '/puntos', que únicamente maneje el verbo 'POST'. Haga que al recibir estas peticiones, el API haga lo mismo que realiza el manejador de los eventos publicados en '/app/newpoints': publicar un nuevo punto en /topic/newpoint, y publicar un polígono cuando se completen los cuatro puntos. Tenga en cuenta que esto implica que el controlador del API REST y el manejador de eventos deben compartir la variable que lleva la cuenta del número de puntos dibujados.
+La aplicación antes planteada tiene un grave defecto: sólo se puede hacer un dibujo a la vez, y la colaboración está restringida a un único grupo, compuesto por TODAS las personas que usen la aplicación en cierto momento.
+
+1. A la aplicación, agregue una API REST en la que se pueda manejar el recurso 'dibujos', y que tenga como subrecurso:
+	* Los identificadores de los diferentes dibujos: /dibujos/{iddibujo}.
+	* Los colaboradores asociados a dichos dibujos: /dibujos/{iddibujo}/colaboradores
 
 
-De nuevo, abra varios clientes, y verifique que mediante el comando curl (desde una terminal) sea posible agregar puntos (Nota: para esto, puede inyectar el _SimpMessagingTemplate_ al controlador del API).
+2. Ajuste el código del servidor, de manera que en lugar de sólo procesar los mensajes enviados a '/app/newpoint', pueda manejar eventos asociados a cada dibujo en particular. Para esto, puede manejar una convención de nombres donde un sufijo permita identificar a qué dibujo va cada punto, y permita por lo tanto llevar un control adecuado de cada uno de éstos  (por ejemplo: /app/newdibujo.23232, /app/newdibujo.48482). Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, revise [la sección 26.4.9 de la documentación de Websockets en Spring](https://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html).
 
+
+
+3. Ajuste el cliente para que, en lugar de hacer automáticamente la suscripción a un determinado tópico, permita al usuario:
+	* Crear un nuevo grupo, ingresando un identificador para el mismo.
+	* Unirse al grupo recién creado, o a uno previamente registrado, indicando su nombre, realizando entonces la suscripción correspondiente.
+	
+	Igualmente, ajuste los nombres de los tópicos manejados en los clientes, de manera que se maneje la misma conveción de nombres (por ejemplo, /topic/newpolygon.223232, para indicar que el evento de creación del polígono irá sólo a los clientes que estén trabajando en el dibujo 223232).
+
+4. En cualquier momento, al realizar la consulta al recurso /dibujos/{iddibujo}/colaboradores, se debe poder identificar quienes están (o han estado) colaborando en un dibujo. OPCIONALMENTE, puede agregar un nuevo tópico dedicado al evento de 'nuevos colaboradores del dibujo {iddibujo}', suscribir a los clientes el mismo (para que actualicen un listado de colaboradores), y hacer que el API rest, cada vez que reciba una petición PUT para agregar un nuevo colaborador, notifique de esto a los interesados.
+
+5. A partir de los diagramas dados en el archivo ASTAH incluido, haga un nuevo diagrama de actividades correspondiente a lo realizado hasta este punto. Exporte este diagrama en formato PNG, e inclúyalo en su entrega con el nombre "DIAGRAMA_ACTUALIZADO.png"
 
 ## Opcional
 
-Con la configuración actual, con tan solo abrir la aplicación, se realiza la conexión al Broker y la suscripción a los tópicos. Haga los ajustes necesarios para que la conexión no sea implícita, y que la misma se realice a través de un botón. Igualmente, agregue un botón de 'desconectar'.
-
-Haga commit de lo realizado, y agregue un TAG para demarcar la versión final:
-
-```bash	
-git tag -a v0.3 -m "Final"	
-```
-## Opcional
+Igualmente puede revisar -DE FORMA OPCIONAL-:
 
 Puede ajustar su cliente para que, además de eventos de mouse, [detecte eventos de pantallas táctiles](http://www.homeandlearn.co.uk/JS/html5_canvas_touch_events.html), de manera que los clientes móviles también puedan interactuar con la aplicación!.
 
 
 ### Criterios de evaluación
 
-1. La aplicación propaga correctamente los puntos entre todas las instancias abierta de la misma.
-2. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos.
-3. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
-4. [Puntos opcionales] La aplicación permite controlar la conexión/desconexión al broker de mensajes.
+1. La aplicación propaga correctamente los puntos entre todas las instancias abierta de la misma, cuando hay sólo un dibujo.
+2. La aplicación propaga correctamente los puntos entre todas las instancias abierta de la misma, cuando hay más de un dibujo.
+3. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos.
+4. La aplicación propaga correctamente el evento de creación del polígono, cuando colaborativamente se insertan cuatro puntos, con 2 o más dibujos simultáneamente.
+5. El API muestra los clientes que trabajan, o han trabajado en un determinado dibujo.
+4. En la implementación se tuvo en cuenta la naturaleza concurrente del ejercicio. Por ejemplo, si se mantiene el conjunto de los puntos recibidos en una colección, la misma debería ser de tipo concurrente (thread-safe).
 5. [Puntos opcionales] La aplicación acepta eventos táctiles.
