@@ -23,7 +23,7 @@ Para esto, realice lo siguiente:
 
 	```javascript
 	stompClient.send("/topic/newpoint", {}, JSON.stringify({x:10,y:10}));
-```
+	```
 
 2. Dentro del módulo JavaScript modifique el método de conexión al WebSocket, para que la aplicación se suscriba al tópico "/topic/newpoint" (en lugar del tópico /TOPICOXX). Asocie como 'callback' de este suscriptor una función que muestre en un mensaje de alerta (alert()) el evento recibido. Como se sabe que en el tópico indicado se publicarán sólo puntos, extraiga el contenido enviado con el evento (objeto JavaScript en versión de texto), conviértalo en objeto JSON, y extraiga de éste sus propiedades (coordenadas X y Y). Para extraer el contenido del evento use la propiedad 'body' del mismo, y para convertirlo en objeto, use JSON.parse. Por ejemplo:
 
