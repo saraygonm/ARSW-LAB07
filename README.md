@@ -1,5 +1,6 @@
 ### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
+#### 👩🏼‍💻👨🏻‍💻 AUTORES: [Saray Alieth Mendivelso Gonzalez](https://github.com/saraygonm) y [Miguel Camilo Tellez Ávila](https://github.com/miguel-tellez)
 ### Laboratorio - Broker de Mensajes STOMP con WebSockets + HTML5 Canvas.
 
 
@@ -22,7 +23,7 @@ En este repositorio se encuentra una aplicación SpringBoot que está configurad
 
 En este caso, el manejador de mensajes asociado a "/app" aún no está configurado, pero sí lo está el broker '/topic'. Como mensaje, se usarán puntos, pues se espera que esta aplicación permita progragar eventos de dibujo de puntos generados por los diferentes clientes.
 
-## Parte I.
+## 📍 Parte I.
 
 Para las partes I y II, usted va a implementar una herramienta de dibujo colaborativo Web, basada en el siguiente diagrama de actividades:
 
@@ -57,7 +58,7 @@ Para esto, realice lo siguiente:
 	```
 
 
-## Parte II.
+## 📍 Parte II.
 
 Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con campos de formulario, las va a capturar a través de eventos sobre un elemento de tipo \<canvas>. De la misma manera, en lugar de simplemente mostrar las coordenadas enviadas en los eventos a través de 'alertas', va a dibujar dichos puntos en el mismo canvas. Haga uso del mecanismo de captura de eventos de mouse/táctil usado en ejercicios anteriores con este fin.
 
@@ -70,7 +71,7 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 	git commit -m "PARTE 2".
 	```
 
-## Parte III.
+## 📍Parte III.
 
 Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez, manteniendo tópicos independientes. Para esto:
 
@@ -84,7 +85,7 @@ Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez
 	```
 
 
-## Parte IV.
+## 📍 Parte IV.
 
 Para la parte IV, usted va  a implementar una versión extendida del modelo de actividades y eventos anterior, en la que el servidor (que hasta ahora sólo fungía como Broker o MOM -Message Oriented Middleware-) se volverá también suscriptor de ciertos eventos, para a partir de los mismos agregar la funcionalidad de 'dibujo colaborativo de polígonos':
 
