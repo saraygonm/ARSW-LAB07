@@ -31,11 +31,9 @@ Para las partes I y II, usted va a implementar una herramienta de dibujo colabor
 
 Para esto, realice lo siguiente:
 
-<<<<<<< HEAD
+
 👉**Se debe utilizar la versión 17 (jdk) de Java para la ejecución del programa.** 👈
-=======
-👉**Se debe utilizar la versión 8 de Java para la ejecución del programa.** 👈
->>>>>>> f60c5bf2e7885381f97ec6f259fff232d1e46d22
+
 
 1. Haga que la aplicación HTML5/JS al ingresarle en los campos de X y Y, además de graficarlos, los publique en el tópico: /topic/newpoint . Para esto tenga en cuenta (1) usar el cliente STOMP creado en el módulo de JavaScript y (2) enviar la representación textual del objeto JSON (usar JSON.stringify). Por ejemplo:
 
