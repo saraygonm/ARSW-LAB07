@@ -9,6 +9,15 @@ var app = (function () {
     
     var stompClient = null;
 
+    var SERVER = "";
+        var TOPIC = "";
+        var TOPICPOLYGON = "";
+
+    var newPoint = {
+        "x": 0,
+        "y" : 0
+    }
+
     var addPointToCanvas = function (point) {        
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
@@ -28,6 +37,31 @@ var app = (function () {
     };
 
 
+    function drawPolygon(points) {
+        var canvas = document.getElementById("Canvas");
+        var ctx = canvas.getContext("2d");
+        if(points.length > 4){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for (var i = 1; i < points.length; i++) {
+            ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.lineTo(points[0].x,points[0].y);
+        ctx.closePath();
+        ctx.stroke();
+       }
+
+    function sendPoint(point){
+            var newPoint = {
+                "x" : point.x,
+                "y" : point.y
+            }
+            stompClient.send(SERVER,{},JSON.stringify(newPoint));
+
+        }
+
     var connectAndSubscribe = function () {
         console.info('Connecting to WS...');
         var socket = new SockJS('/stompendpoint');
@@ -37,9 +71,13 @@ var app = (function () {
         stompClient.connect({}, function (frame) {
             console.log('Connected: ' + frame);
             stompClient.subscribe('/topic/TOPICXX', function (eventbody) {
-                
-                
+                var point = JSON.parse(eventbody.body);
+                addPointToCanvas(point);
             });
+            stompClient.subcribe(TOPICPOLYGON,function ()eventbody){
+                var point = JSON.parse(eventbody.body);
+                drawPolygon(points);
+            }
         });
 
     };
@@ -49,27 +87,48 @@ var app = (function () {
     return {
 
         init: function () {
-            var can = document.getElementById("canvas");
-            
-            //websocket connection
-            connectAndSubscribe();
-        },
-
-        publishPoint: function(px,py){
-            var pt=new Point(px,py);
-            console.info("publishing point at "+pt);
-            addPointToCanvas(pt);
-
-            //publicar el evento
-        },
-
-        disconnect: function () {
-            if (stompClient !== null) {
-                stompClient.disconnect();
+            var canvas = $("#Canvas");
+            canvas = $("#Canvas")[0];
+            if (window.PointerEvent) {
+                canvas.addEventListener("pointerdown", function(event){
+                    newPoint = getMousePosition(event);
+                    sendPoint(newPoint);
+                })
             }
-            setConnected(false);
-            console.log("Disconnected");
-        }
-    };
+            else {
+                canvas.addEventListener("mousedown", function (event) {
+                    alert('mousedown at ' + event.clientX + ',' + event.clientY);
+
+                });
+            }
+            //websocket connection
+
+            },
+
+            publishPoint: function(px,py){
+                var pt=new Point(px,py);
+                console.info("publishing point at "+pt);
+                //agregar la linea que envia el punto
+                sendPoint(pt);
+                addPointToCanvas(pt);
+            },
+
+            disconnect: function () {
+                if (stompClient !== null) {
+                    stompClient.disconnect();
+                }
+                setConnected(false);
+                console.log("Disconnected");
+            },
+
+            connect: function(){
+                var number = ($("#num").val());
+                SERVER = "/app/newpoint." + number;
+                TOPIC = "/topic/newpoint." + number;
+                TOPICPOLYGON = "/topic/newpolygon."+ number;
+                connectAndSubscribe();
+
+            }
+        };
 
 })();
