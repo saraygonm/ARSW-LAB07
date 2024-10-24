@@ -79,11 +79,7 @@ var app = (function () {
                 drawPolygon(points);
             }
         });
-
     };
-    
-    
-
     return {
 
         init: function () {
