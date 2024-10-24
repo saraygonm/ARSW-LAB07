@@ -31,7 +31,11 @@ Para las partes I y II, usted va a implementar una herramienta de dibujo colabor
 
 Para esto, realice lo siguiente:
 
+<<<<<<< HEAD
 👉**Se debe utilizar la versión 17 (jdk) de Java para la ejecución del programa.** 👈
+=======
+👉**Se debe utilizar la versión 8 de Java para la ejecución del programa.** 👈
+>>>>>>> f60c5bf2e7885381f97ec6f259fff232d1e46d22
 
 1. Haga que la aplicación HTML5/JS al ingresarle en los campos de X y Y, además de graficarlos, los publique en el tópico: /topic/newpoint . Para esto tenga en cuenta (1) usar el cliente STOMP creado en el módulo de JavaScript y (2) enviar la representación textual del objeto JSON (usar JSON.stringify). Por ejemplo:
 
@@ -102,7 +106,11 @@ Para hacer mas útil la aplicación, en lugar de capturar las coordenadas con ca
 2. Ejecute su aplicación en varios navegadores (y si puede en varios computadores, accediendo a la aplicación mendiante la IP donde corre el servidor). Compruebe que a medida que se dibuja un punto, el mismo es replicado en todas las instancias abiertas de la aplicación.
 
 <p align="center">
+<<<<<<< HEAD
 <img src="img/1/18.png" alt="" width="700px">
+=======
+<img src="img/1/.png" alt="" width="700px">
+>>>>>>> f60c5bf2e7885381f97ec6f259fff232d1e46d22
 </p>
 
 5. Haga commit de lo realizado, para marcar el avance de la parte 2.
@@ -128,7 +136,11 @@ Ajuste la aplicación anterior para que pueda manejar más de un dibujo a la vez
 3. De la misma manera, haga que las publicaciones se realicen al tópico asociado al identificador ingresado por el usuario.
 
 <p align="center">
+<<<<<<< HEAD
 <img src="img/1/19.png" alt="" width="700px">
+=======
+<img src="img/1/.png" alt="" width="700px">
+>>>>>>> f60c5bf2e7885381f97ec6f259fff232d1e46d22
 </p>
 
 5. Rectifique que se puedan realizar dos dibujos de forma independiente, cada uno de éstos entre dos o más clientes.
@@ -187,12 +199,17 @@ Para ver cómo manejar esto desde el manejador de eventos STOMP del servidor, re
 	<p align="center">
 	<img src="img/1/14.png" alt="" width="700px">
 	</p>
+<<<<<<< HEAD
    
     2. El manejador de eventos de /app/newpoint.{numdibujo}, además de propagar los puntos a través del tópico '/topic/newpoints', llevará el control de los puntos recibidos(que podrán haber sido dibujados por diferentes clientes). Cuando se completen tres o más puntos, publicará el polígono en el tópico '/topic/newpolygon'. Recuerde que esto se realizará concurrentemente, de manera que REVISE LAS POSIBLES CONDICIONES DE CARRERA!. También tenga en cuenta que desde el manejador de eventos del servidor se tendrán N dibujos independientes!.
 	<p align="center">
 	<img src="img/1/15.png" alt="" width="700px">
 	</p>
    
+=======
+   2. Elmanejador de eventos de /app/newpoint.{numdibujo}, además de propagar los puntos a través del tópico '/topic/newpoints', llevará el control de los puntos recibidos(que podrán haber sido dibujados por diferentes clientes). Cuando se completen tres o más puntos, publicará el polígono en el tópico '/topic/newpolygon'. Recuerde que esto se realizará concurrentemente, de manera que REVISE LAS POSIBLES CONDICIONES DE CARRERA!. También tenga en cuenta que desde el manejador de eventos del servidor se tendrán N dibujos independientes!.
+
+>>>>>>> f60c5bf2e7885381f97ec6f259fff232d1e46d22
 	3. El cliente, ahora también se suscribirá al tópico '/topic/newpolygon'. El 'callback' asociado a la recepción de eventos en el mismo debe, con los datos recibidos, dibujar un polígono, [tal como se muestran en ese ejemplo](http://www.arungudelli.com/html5/html5-canvas-polygon/).
 	
    5. Verifique la funcionalidad: igual a la anterior, pero ahora dibujando polígonos cada vez que se agreguen cuatro puntos.
