@@ -14,6 +14,7 @@ var newpoint = JSON.parse(greeting.body);
 
 stompClient.send("/topic/newpoint", {}, JSON.stringify(pt));  				
 
+![Demo](img/funcionando.gif)
 
 Este ejercicio se basa en la documentación oficial de SprinbBoot, para el [manejo de WebSockets con STOMP](https://spring.io/guides/gs/messaging-stomp-websocket/).
 
